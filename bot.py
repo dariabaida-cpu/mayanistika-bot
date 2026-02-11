@@ -141,15 +141,14 @@ async def get_phone(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[InlineKeyboardButton("✅ Продолжить", callback_data="paid")]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    update.message.reply_text(PAYMENT_INFO)
+    await update.message.reply_text(PAYMENT_INFO, reply_markup=reply_markup)
 
     # Отправляем QR-код
     try:
         with open(QR_CODE_IMAGE, "rb") as photo:
             await update.message.reply_photo(
                 photo=photo,
-                caption="Секачева Дарья Сергеевна\nНомер договора 5053221965",
-reply_markup=reply_markup
+                caption="Секачева Дарья Сергеевна\nНомер договора 5053221965"
             )
     except FileNotFoundError:
         pass  # QR-код не обязателен, пропускаем
