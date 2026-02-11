@@ -141,15 +141,14 @@ async def get_phone(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[InlineKeyboardButton("✅ Продолжить", callback_data="paid")]]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    await update.message.reply_text(PAYMENT_INFO)
+    await update.message.reply_text(PAYMENT_INFO, reply_markup=reply_markup)
 
     # Отправляем QR-код
     try:
         with open(QR_CODE_IMAGE, "rb") as photo:
             await update.message.reply_photo(
                 photo=photo,
-                caption="Секачева Дарья Сергеевна\nНомер договора 5053221965",
-reply_markup=reply_markup
+                caption="Секачева Дарья Сергеевна\nНомер договора 5053221965"
             )
     except FileNotFoundError:
         pass  # QR-код не обязателен, пропускаем
@@ -203,12 +202,7 @@ async def payment_confirmed(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.message.reply_text(thank_you_msg, parse_mode="Markdown")
     await query.message.reply_text(LOCATION_INFO)
 
-    # Видео места
-    try:
-        with open("location.mp4", "rb") as video:
-            await query.message.reply_video(video=video)
-    except FileNotFoundError:
-        pass
+
 
     await query.message.reply_text(
         "Хотите купить ещё один билет?",
