@@ -202,10 +202,10 @@ async def payment_confirmed(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.message.reply_text(thank_you_msg, parse_mode="Markdown")
     await query.message.reply_text(LOCATION_INFO)
 
-    # Фото места
+    # Видео места
     try:
-        with open(LOCATION_IMAGE, "rb") as photo:
-            await query.message.reply_photo(photo=photo)
+        with open("location.mp4", "rb") as video:
+            await query.message.reply_video(video=video)
     except FileNotFoundError:
         pass
 
